@@ -1,11 +1,13 @@
 package com.sample.postgress.service;
 
 import java.util.List;
+import java.util.Optional;
 
-import com.sample.postgress.entity.Employee;
 import com.sample.postgress.entity.Project;
 
 public interface ProjectService {
+	
+	Optional<Project> findById(String Id);
 	
 	List<Project> findAll();
 

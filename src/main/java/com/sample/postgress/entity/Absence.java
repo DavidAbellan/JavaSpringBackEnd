@@ -1,18 +1,15 @@
 package com.sample.postgress.entity;
 
 
-import java.time.LocalDate;
-import java.util.List;
 
-import javax.persistence.CascadeType;
+import java.time.LocalDate;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
 
 
 
@@ -29,10 +26,14 @@ public class Absence  {
 	@Column (name = "description")
 	private String description;
 	@Column (name = "startdate")
-	private String startDate;
-	
+	private LocalDate startDate;
 	@Column (name = "enddate")
-	private String endDate;
+	private LocalDate endDate;
+	
+	@ManyToOne
+	@JoinColumn(name="employeeid",insertable = false, updatable = false)
+    Employee employee;	
+	
 	
 	public String getEmployeeid() {
 		return employeeid;
@@ -40,11 +41,6 @@ public class Absence  {
 	public void setEmployeeid(String employeeid) {
 		this.employeeid = employeeid;
 	}
-	@ManyToOne
-	@JoinColumn(name="employeeid",insertable = false, updatable = false)
-    Employee employee;	
-	
-	
 	
 	public String getId() {
 		return id;
@@ -64,16 +60,16 @@ public class Absence  {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setStartDate(LocalDate localDate) {
+		this.startDate = localDate;
 	}
-	public String getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 	

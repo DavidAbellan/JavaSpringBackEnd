@@ -1,7 +1,8 @@
 package com.sample.postgress.entity;
 
 
-import java.time.LocalDate;
+
+import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,9 +21,8 @@ public class userPacman  {
 	@Id
 	@Column (name = "id")
 	private String id;
-	//@Column (name = "hire_date")
-	//private LocalDate hireDate ;
-	//hireDate date DEFAULT NULL
+	@Column (name = "hiredate")
+	private Date hireDate ;
 	@Column (name = "name")
 	private String name;
 	@Column (name = "surname")
@@ -32,9 +32,7 @@ public class userPacman  {
 	@Column (name = "password")
 	private String password;
 	
-	//private Employee() {
-	//	hireDate = hireDate.now();
-	//}
+	
 	@OneToOne(mappedBy="userpacman", cascade= CascadeType.ALL)
 	 Employee employee;
 	
@@ -101,18 +99,7 @@ public class userPacman  {
 	}
 
 
-	//public LocalDate getHireData() {
-	//	return hireDate;
-	//}
-
-
-	//public void setHireData(LocalDate hireData) {
-	//	this.hireDate = hireData;
-	//}
-
 	
-	 
-
 	 
 	
 	

@@ -1,14 +1,16 @@
 package com.sample.postgress.entity;
 
+import java.time.LocalDate;
+import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name="employeeprojectperiod")
@@ -16,31 +18,31 @@ public class EmployeeProjectPeriod {
 	@Id
 	@Column (name= "id")
 	private String id;
-	@Column (name= "idemployee")
+	@Column (name= "employeeid")
 	private String idEmployee;
 	@Column (name= "idproject")
 	private String idProject;
 	@Column (name = "startdate")
-	private String startDate;
+	private LocalDate startDate;
 	@Column (name = "enddate")
-	private String endDate;
+	private LocalDate endDate;
 	@Column (name = "dedication")
 	private String dedication;
 	
-	@ManyToOne
-	@JoinColumn(name="idemployee",insertable = false, updatable = false)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="employeeid",insertable = false, updatable = false)
     Employee employee;
 	
+	@ManyToOne(cascade = CascadeType.ALL) 
+	@JoinColumn(name ="idproject", insertable = false, updatable=false)
+	Project project;
 	
 	public String getId() {
 		return id;
 	}
-	public Employee getEmployee() {
-		return employee;
-	}
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
+	
+	
+
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -56,16 +58,16 @@ public class EmployeeProjectPeriod {
 	public void setIdProject(String idProject) {
 		this.idProject = idProject;
 	}
-	public String getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setStartDate(LocalDate fecha) {
+		this.startDate = fecha;
 	}
-	public String getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 	public String getDedication() {

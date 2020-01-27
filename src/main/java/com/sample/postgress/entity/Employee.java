@@ -2,6 +2,7 @@ package com.sample.postgress.entity;
 
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -29,9 +30,8 @@ public class Employee  {
 	@Id
 	@Column (name= "id")
 	private String id;
-	//@Column (name = "hire_date")
-	//private LocalDate hireDate ;
-	//hireDate date DEFAULT NULL
+	@Column (name = "hiredate")
+	private LocalDate hireDate ;
 	@Column (name = "name")
 	private String name;
 	@Column (name = "surname")
@@ -41,42 +41,48 @@ public class Employee  {
 	@Column (name = "password")
 	private String password;
 	
-	//private Employee() {
-	//	hireDate = hireDate.now();
-	//}
+	
+
+
 	@OneToOne(fetch= FetchType.LAZY, optional = false)
 	@MapsId("id")//maps id porque tanto employee como userpacaman tienen la misma(el mismo nombre en BBDD) clave primary 
-	@JoinColumn (name="id", nullable=false)
+	@JoinColumn (name="id", nullable=false)//JOIN COLUMN sólo en ONE TO ONE
 	userPacman userpacman;
 	
 	
-	@OneToMany(targetEntity = EmployeeProjectPeriod.class, cascade = CascadeType.ALL)
-	@JoinColumn (name="idemployee")
-	@JsonIgnoreProperties("employee")
-    List<EmployeeProjectPeriod> employeeProjectPeriod;
-	
-	@OneToMany(targetEntity = Absence.class,cascade = CascadeType.ALL)
-	@JoinColumn (name = "employeeid" )
+	@OneToMany(mappedBy ="employee")
 	@JsonIgnoreProperties("employee")
     List <Absence> employeeAbsences;
 	
-	
-	//Hay que crear la tabla
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-			name = "employeeproject",
+	@ManyToMany
+    @JoinTable(
+			name ="employeeskill",
 			joinColumns = @JoinColumn(name = "employeeid"),
-			inverseJoinColumns = @JoinColumn (name="projectid")
+			inverseJoinColumns = @JoinColumn(name="skillid")
 			)
-	Set<Project> projectsEmployees;
+	List<Skill> skillemployee;
+	
+	
+	@OneToMany(targetEntity = EmployeeProjectPeriod.class,cascade=CascadeType.ALL)
+	@JoinColumn(name="employeeid")
+    Set<EmployeeProjectPeriod> projectsEmployees;
 	
 	
 	
 	
+	public void addSkill(Skill skill) {
+		this.skillemployee.add(skill);
+		
+	}
 	
+	public List<Skill> getEmployeeSkills() {
+		return skillemployee;
+	}
 
 
-
+	public void setEmployeeSkills(List<Skill> employeeSkills) {
+		skillemployee = employeeSkills;
+	}
 
 
 	public List<Absence> getEmployeeAbsences() {
@@ -88,6 +94,17 @@ public class Employee  {
 		this.employeeAbsences = employeeAbsences;
 	}
 
+
+	
+	
+	
+	public Set<EmployeeProjectPeriod> getProjectsEmployees() {
+		return projectsEmployees;
+	}
+
+	public void setProjectsEmployees(Set<EmployeeProjectPeriod> projectsEmployees) {
+		this.projectsEmployees = projectsEmployees;
+	}
 
 	public String getName() {
 		return name;
@@ -138,24 +155,12 @@ public class Employee  {
 		this.id = id;
 	}
 
-
-
-
-
-	//public LocalDate getHireData() {
-	//	return hireDate;
-	//}
-
-
-	//public void setHireData(LocalDate hireData) {
-	//	this.hireDate = hireData;
-	//}
-
 	
-	 
-
-	 
+	public LocalDate getHireDate() {
+		return hireDate;
+	}
 	
-	
-	
+	public void setHireDate(LocalDate localDate) {
+		this.hireDate = localDate;
+	}
 }

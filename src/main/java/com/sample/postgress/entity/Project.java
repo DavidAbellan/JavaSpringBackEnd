@@ -2,47 +2,70 @@ package com.sample.postgress.entity;
 
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 
 @Entity
+@Table(name="project")
+
 public class Project  {
 	
 	@Id
 	@Column (name= "id")
 	private String id;
-	
 	@Column (name = "name")
 	private String name;
 	@Column (name = "description")
 	private String description;
 	@Column (name = "startdate")
-	private String startDate;
+	private LocalDate startDate;
 	@Column (name = "enddate")
-	private String endDate;
+	private LocalDate endDate;
 	
-	@ManyToMany(mappedBy="projectsEmployees")
-	Set<Employee>employees;
 	
+	@OneToMany(targetEntity = EmployeeProjectPeriod.class,cascade = CascadeType.ALL)
+	@JoinColumn(name="idproject")
+	Set<EmployeeProjectPeriod> projectsEmployees;
+	
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable (
+			name = "projectskill",
+			joinColumns = @JoinColumn(name ="projectid"),
+			inverseJoinColumns = @JoinColumn (name="skillid")
+			)
+	     Set<Skill> projectskill;
+	
+	
+	
+	
+    public Set<Skill> getProjectskill() {
+		return projectskill;
+	}
+	public Set<EmployeeProjectPeriod> getProjectsEmployees() {
+		return projectsEmployees;
+	}
+	public void setProjectsEmployees(Set<EmployeeProjectPeriod> projectsEmployees) {
+		this.projectsEmployees = projectsEmployees;
+	}
+	public void setProjectskill(Set<Skill> projectskill) {
+		this.projectskill = projectskill;
+	}
 	public String getId() {
 		return id;
 	}
-	public Set<Employee> getEmployees() {
-		return employees;
-	}
-	public void setEmployees(Set<Employee> employees) {
-		this.employees = employees;
-	}
-	public void setEmployee(Employee employee) {
-		this.employees.add(employee);
-	}
-	
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -58,16 +81,16 @@ public class Project  {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setStartDate(LocalDate localDate) {
+		this.startDate = localDate;
 	}
-	public String getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 	

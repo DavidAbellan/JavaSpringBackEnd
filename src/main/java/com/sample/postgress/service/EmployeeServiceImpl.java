@@ -1,7 +1,7 @@
 package com.sample.postgress.service;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,4 +31,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 		EmployeeDao.delete(emp);
 		
 	}
+    @Override
+    public Optional<Employee> findById(String id){
+		return EmployeeDao.findById(id);
+    	
+    }
+	
+  
+    
 }

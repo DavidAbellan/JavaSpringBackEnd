@@ -1,7 +1,7 @@
 package com.sample.postgress.service;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,4 +31,9 @@ public class SkillServiceImpl implements SkillService{
 		SkillDao.delete(ski);
 		
 	}
+    @Override 
+    public Optional<Skill> findById(String ID){
+    	return SkillDao.findById(ID);
+    }
+    
 }
